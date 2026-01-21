@@ -36,7 +36,6 @@ const SYMBOLS = [
   { name: "lemon", emoji: "🍋", color: "from-yellow-400 to-yellow-600" },
   { name: "orange", emoji: "🍊", color: "from-orange-400 to-orange-600" },
   { name: "plum", emoji: "🍇", color: "from-purple-400 to-purple-600" },
-  { name: "watermelon", emoji: "🍉", color: "from-green-400 to-red-500" },
   { name: "seven", emoji: "7️⃣", color: "from-blue-400 to-blue-600" },
 ];
 
