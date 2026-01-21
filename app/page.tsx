@@ -11,6 +11,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import SlotMachineGame from "@/components/SlotMachineGame";
 
 type VotesResponse = {
   votes: number;
@@ -40,6 +41,14 @@ export default function VoteTracker() {
         time: time * 1000,
         votes: index + 1,
       }));
+
+      if (formatted.length) {
+        formatted.push({
+          time: Date.now(),
+          votes: data.votes,
+        });
+      }
+
       setVoteHistory(formatted);
     } catch (error) {
       console.error("Error fetching votes:", error);
@@ -137,7 +146,7 @@ export default function VoteTracker() {
 
               {isWinning && (
                 <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-3 rounded-full font-bold text-xl animate-bounce">
-                  🎊 ПЕРЕМОГА 🎊
+                  🎊 ПЕРЕМОГА! 🎊
                 </div>
               )}
 
@@ -172,7 +181,7 @@ export default function VoteTracker() {
             <ul className="space-y-4 text-gray-300 text-base lg:text-lg">
               <li className="flex items-start">
                 <span className="text-purple-400 mr-3 text-xl lg:text-2xl">
-                  ✓
+                  ✔
                 </span>
                 <span>
                   Легалізація виробництва, споживання та розповсюдження
@@ -182,7 +191,7 @@ export default function VoteTracker() {
               </li>
               <li className="flex items-start">
                 <span className="text-purple-400 mr-3 text-xl lg:text-2xl">
-                  ✓
+                  ✔
                 </span>
                 <span>
                   Реабілітація усіх політичних в&apos;язнів часів режиму Михайла
@@ -191,7 +200,7 @@ export default function VoteTracker() {
               </li>
               <li className="flex items-start">
                 <span className="text-purple-400 mr-3 text-xl lg:text-2xl">
-                  ✓
+                  ✔
                 </span>
                 <span>
                   Створення мережі підпільних казино у 8-ому гуртожитку. Як
@@ -203,7 +212,7 @@ export default function VoteTracker() {
               </li>
               <li className="flex items-start">
                 <span className="text-purple-400 mr-3 text-xl lg:text-2xl">
-                  ✓
+                  ✔
                 </span>
                 <span>
                   Запровадження конституційної гарантії права на володіння та
@@ -212,7 +221,7 @@ export default function VoteTracker() {
               </li>
               <li className="flex items-start">
                 <span className="text-purple-400 mr-3 text-xl lg:text-2xl">
-                  ✓
+                  ✔
                 </span>
                 <span>
                   Заборона реквестити на Радіо КПІ будь-які композиції крім
@@ -222,7 +231,7 @@ export default function VoteTracker() {
               </li>
               <li className="flex items-start">
                 <span>
-                  Обіцяю, що у разі перемоги у перший день на посаді голови СР я
+                  Обіцяю, що у разі перемоги у перший день на посаді голови СР є
                   свідомо і відповідально складу із себе повноваження з метою
                   проведення нових чесних та прозорих демократичних виборів за
                   участі міжнародних спостерігачів. Слава Україні.
@@ -246,7 +255,7 @@ export default function VoteTracker() {
           </div>
         </div>
 
-        <div className="bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 pl-2 border border-purple-500/30 shadow-2xl">
+        <div className="bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 pl-2 border border-purple-500/30 shadow-2xl mb-8">
           <h3 className="text-2xl font-bold mb-6 pl-6">Динаміка голосів</h3>
           {isLoading ? (
             <div className="h-64 flex items-center justify-center">
@@ -300,6 +309,8 @@ export default function VoteTracker() {
             </div>
           )}
         </div>
+
+        <SlotMachineGame />
       </div>
     </div>
   );
