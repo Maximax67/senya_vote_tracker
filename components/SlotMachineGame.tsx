@@ -335,8 +335,8 @@ export default function SlotMachineGame() {
               { combo: "🍒🍒🍒", bonus: 5 },
               { combo: "🍋🍋🍋", bonus: 10 },
               { combo: "🍊🍊🍊", bonus: 20 },
-              { combo: "🍇🍇🍇", bonus: 50 },
-              { combo: "7️⃣7️⃣7️⃣", bonus: 100 },
+              { combo: "🍇🍇🍇", bonus: 30 },
+              { combo: "7️⃣7️⃣7️⃣", bonus: 50 },
             ].map((prize, i, arr) => {
               const isLastAndOdd = i === arr.length - 1 && arr.length % 2 !== 0;
 

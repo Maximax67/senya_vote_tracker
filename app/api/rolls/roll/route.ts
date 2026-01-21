@@ -21,8 +21,8 @@ const WINNING_BONUSES: Record<string, number> = {
   'cherry-cherry-cherry': 5,
   'lemon-lemon-lemon': 10,
   'orange-orange-orange': 20,
-  'plum-plum-plum': 50,
-  'seven-seven-seven': 100,
+  'plum-plum-plum': 30,
+  'seven-seven-seven': 50,
 };
 
 function generateRollResult(seed: string): number[] {
