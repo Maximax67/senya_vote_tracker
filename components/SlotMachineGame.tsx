@@ -221,10 +221,10 @@ export default function SlotMachineGame() {
   };
 
   return (
-    <div className="relative bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 border border-purple-500/30 shadow-2xl overflow-hidden">
+    <div className="relative bg-gray-800/50 backdrop-blur-lg rounded-2xl p-3 sm:p-8 border border-purple-500/30 shadow-2xl overflow-hidden">
       <Particles show={showParticles} />
 
-      <div className="relative z-10">
+      <div className="relative z-10 mt-3 sm:mt-0">
         <h3 className="text-3xl font-bold mb-6 text-center flex items-center justify-center">
           <span className="text-4xl mr-3 animate-pulse">🎰</span>
           <span className="bg-gradient-to-r from-yellow-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
@@ -237,7 +237,7 @@ export default function SlotMachineGame() {
             <div className="space-y-2">
               <div className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 px-6 py-3 rounded-full">
                 <p className="text-2xl font-bold">
-                  Доступно спінів:{" "}
+                  Спіни:{" "}
                   <span className="text-yellow-300">
                     {stats.availableRolls}
                   </span>
@@ -256,10 +256,10 @@ export default function SlotMachineGame() {
         </div>
 
         <div className="relative mb-6">
-          <div className="relative bg-gradient-to-br from-gray-800 via-purple-900/30 to-gray-800 p-6 rounded-3xl shadow-inner">
+          <div className="relative bg-gradient-to-br from-gray-800 via-purple-900/30 to-gray-800 p-2 sm:p-6 rounded-3xl shadow-inner">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-3xl"></div>
 
-            <div className="relative flex justify-center gap-4">
+            <div className="relative flex justify-center gap-2 sm:gap-4">
               {[0, 1, 2].map((index) => (
                 <Reel
                   key={index}
