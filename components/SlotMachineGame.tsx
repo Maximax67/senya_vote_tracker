@@ -347,7 +347,7 @@ export default function SlotMachineGame() {
                     isLastAndOdd ? "col-span-2" : ""
                   }`}
                 >
-                  <span className="text-2xl sm:text-3xl mr-0 sm:mr-4 text-center sm:text-left">
+                  <span className="text-xl sm:text-3xl mr-0 sm:mr-4 text-center sm:text-left">
                     {prize.combo}
                   </span>
                   <span className="mt-1 sm:mt-0 text-yellow-400 font-bold text-lg sm:text-xl text-center sm:text-left">

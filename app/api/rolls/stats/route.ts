@@ -85,7 +85,8 @@ export async function GET(request: NextRequest) {
         availableRolls: baseRolls,
         rollsMade: 0,
         rollsBonuses: 0,
-        totalVotes
+        totalVotes,
+        votesPerRoll,
       });
 
       response.cookies.set('slot_user_token', newToken, {
