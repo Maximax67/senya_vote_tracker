@@ -12,13 +12,13 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-type VoteSnapshot = {
-  recordedAt: string;
+type VotesResponse = {
   votes: number;
+  history: number[];
 };
 
-type FormattedVoteSnapshot = {
-  time: string;
+type VoteSnapshot = {
+  time: number;
   votes: number;
 };
 
@@ -27,46 +27,34 @@ export default function VoteTracker() {
     process.env.NEXT_PUBLIC_TOTAL_VOTES_NEEDED || "159",
   );
   const [currentVotes, setCurrentVotes] = useState(0);
-  const [voteHistory, setVoteHistory] = useState<FormattedVoteSnapshot[]>([]);
+  const [voteHistory, setVoteHistory] = useState<VoteSnapshot[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchVotes = async () => {
     try {
       const response = await fetch("/api/votes");
-      const data = await response.json();
+      const data: VotesResponse = await response.json();
       setCurrentVotes(data.votes);
+
+      const formatted = data.history.map((time, index) => ({
+        time: time * 1000,
+        votes: index + 1,
+      }));
+      setVoteHistory(formatted);
     } catch (error) {
       console.error("Error fetching votes:", error);
     }
   };
 
-  const fetchHistory = async () => {
-    try {
-      const response = await fetch("/api/history");
-      const data: { history: VoteSnapshot[] } = await response.json();
-      const formatted = data.history.map((item) => ({
-        time: new Date(item.recordedAt).toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-        votes: item.votes,
-      }));
-      setVoteHistory(formatted);
-    } catch (error) {
-      console.error("Error fetching history:", error);
-    }
-  };
-
   useEffect(() => {
     const init = async () => {
-      await Promise.all([fetchVotes(), fetchHistory()]);
+      await fetchVotes();
       setIsLoading(false);
     };
     init();
 
     const interval = setInterval(() => {
       fetchVotes();
-      fetchHistory();
     }, 60000);
 
     return () => clearInterval(interval);
@@ -74,6 +62,28 @@ export default function VoteTracker() {
 
   const percentage = Math.min((currentVotes / TOTAL_VOTES_NEEDED) * 100, 100);
   const isWinning = currentVotes >= TOTAL_VOTES_NEEDED;
+
+  const formatTick = (ts: number) => {
+    const d = new Date(ts);
+    const now = new Date();
+
+    const isToday =
+      d.getDate() === now.getDate() &&
+      d.getMonth() === now.getMonth() &&
+      d.getFullYear() === now.getFullYear();
+
+    const hh = String(d.getHours()).padStart(2, "0");
+    const mm = String(d.getMinutes()).padStart(2, "0");
+
+    if (isToday) {
+      return `${hh}:${mm}`;
+    }
+
+    const dd = String(d.getDate()).padStart(2, "0");
+    const MM = String(d.getMonth() + 1).padStart(2, "0");
+
+    return `${dd}.${MM} ${hh}:${mm}`;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white overflow-hidden">
@@ -236,8 +246,8 @@ export default function VoteTracker() {
           </div>
         </div>
 
-        <div className="bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 border border-purple-500/30 shadow-2xl">
-          <h3 className="text-2xl font-bold mb-6">Кількість голосів з часом</h3>
+        <div className="bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 pl-2 border border-purple-500/30 shadow-2xl">
+          <h3 className="text-2xl font-bold mb-6 pl-6">Динаміка голосів</h3>
           {isLoading ? (
             <div className="h-64 flex items-center justify-center">
               <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-500"></div>
@@ -254,7 +264,11 @@ export default function VoteTracker() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                 <XAxis
                   dataKey="time"
-                  stroke="#9ca3af"
+                  type="number"
+                  scale="time"
+                  domain={["auto", "auto"]}
+                  interval="preserveStartEnd"
+                  tickFormatter={formatTick}
                   tick={{ fill: "#9ca3af" }}
                 />
                 <YAxis
@@ -268,6 +282,7 @@ export default function VoteTracker() {
                     border: "1px solid #a855f7",
                     borderRadius: "8px",
                   }}
+                  labelFormatter={formatTick}
                 />
                 <Area
                   type="monotone"

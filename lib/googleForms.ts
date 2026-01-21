@@ -18,7 +18,7 @@ function getAuth() {
   return auth;
 }
 
-export async function getFormResponseCount() {
+export async function getFormResponsesDates(): Promise<number[]> {
   const spreadsheetId = process.env.GOOGLE_SPREADSHEET_ID;
   if (!spreadsheetId) {
     throw new Error('GOOGLE_SPREADSHEET_ID is not set');
@@ -33,5 +33,18 @@ export async function getFormResponseCount() {
   });
 
   const rows = response.data.values;
-  return rows ? Math.max(rows.length - 1, 0) : 0;
+  if (!rows || rows.length <= 1) {
+    return [];
+  }
+
+  const dates = rows.slice(1).map(([value]) => {
+    const [datePart, timePart] = value.split(' ');
+    const [day, month, year] = datePart.split('.').map(Number);
+    const [hour, minute, second] = timePart.split(':').map(Number);
+    const date = new Date(year, month - 1, day, hour, minute, second);
+
+    return Math.floor(date.getTime() / 1000);
+  });
+
+  return dates;
 }
