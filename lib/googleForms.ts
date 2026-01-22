@@ -37,13 +37,18 @@ export async function getFormResponsesDates(): Promise<number[]> {
     return [];
   }
 
+  const utcOffsetHours = parseInt(process.env.UTC_OFFSET || "0");
+  const utcOffsetMs = utcOffsetHours * 60 * 60 * 1000;
+
   const dates = rows.slice(1).map(([value]) => {
     const [datePart, timePart] = value.split(' ');
     const [day, month, year] = datePart.split('.').map(Number);
     const [hour, minute, second] = timePart.split(':').map(Number);
-    const date = new Date(year, month - 1, day, hour, minute, second);
 
-    return Math.floor(date.getTime() / 1000);
+    const localDate = new Date(year, month - 1, day, hour, minute, second);
+    const utcTime = localDate.getTime() - utcOffsetMs;
+
+    return Math.floor(utcTime / 1000);
   });
 
   return dates;
