@@ -1,3 +1,4 @@
+import { getUkrainianNumEnding } from "@/lib/utils";
 import { useState, useEffect, useRef } from "react";
 
 type RollStats = {
@@ -248,7 +249,9 @@ export default function SlotMachineGame() {
                 <span>Виграно: {stats.rollsBonuses}</span>
               </div>
               <p className="text-xs text-gray-500">
-                Кожні {stats.votesPerRoll} голоси = 1 спін для всіх
+                Кож{stats.votesPerRoll === 1 ? "ен" : "ні"}{" "}
+                {stats.votesPerRoll} підпис
+                {getUkrainianNumEnding(stats.votesPerRoll)} = 1 спін для всіх
               </p>
             </div>
           )}

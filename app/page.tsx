@@ -128,7 +128,7 @@ export default function VoteTracker() {
                 <div className="flex justify-between mb-2">
                   <span className="text-2xl font-bold">{currentVotes}</span>
                   <span className="text-gray-400">
-                    / {TOTAL_VOTES_NEEDED} голосів
+                    / {TOTAL_VOTES_NEEDED} підписів
                   </span>
                 </div>
                 <div className="w-full bg-gray-700 rounded-full h-6 overflow-hidden">
@@ -256,7 +256,7 @@ export default function VoteTracker() {
         </div>
 
         <div className="bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 pl-2 border border-purple-500/30 shadow-2xl mb-8">
-          <h3 className="text-2xl font-bold mb-6 pl-6">Динаміка голосів</h3>
+          <h3 className="text-2xl font-bold mb-6 pl-6">Динаміка підписів</h3>
           {isLoading ? (
             <div className="h-64 flex items-center justify-center">
               <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-500"></div>

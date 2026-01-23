@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Сєня Голова",
-  description: "Трекер голосів за Сєню",
+  description: "Трекер підписів за Сєню",
 };
 
 export default function RootLayout({
